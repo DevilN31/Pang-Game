@@ -10,6 +10,7 @@ public class BasicMovementController : MonoBehaviour
     Animator _anim;
     Rigidbody2D _rig;
     SpriteRenderer _renderer;
+    float _direction = 0;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class BasicMovementController : MonoBehaviour
 
     void FixedUpdate()
     {
+        /*
         if(Input.GetAxis("Horizontal") != 0)
         {
             _anim.SetBool("IsRunning", true);
@@ -33,5 +35,43 @@ public class BasicMovementController : MonoBehaviour
             _anim.SetBool("IsRunning", false);
 
         }
+        */
+
+        if (_direction != 0)
+        {
+            _anim.SetBool("IsRunning", true);
+            _renderer.flipX = _direction > 0 ? false : true;
+            Vector2 movementDirection = new Vector2(_direction * _MovementSpeed, 0);
+            _rig.AddForce(movementDirection);
+        }
+        else
+        {
+            _anim.SetBool("IsRunning", false);
+
+        }
+
+    }
+
+    public void MoveLeft()
+    {
+        _anim.SetBool("IsRunning", true);
+        float direction = -1;
+        _renderer.flipX = true;
+        Vector2 movementDirection = new Vector2(direction * _MovementSpeed, 0);
+        _rig.AddForce(movementDirection);
+    }
+
+    public void MoveRight()
+    {
+        _anim.SetBool("IsRunning", true);
+        float direction = 1;
+        _renderer.flipX = false;
+        Vector2 movementDirection = new Vector2(direction * _MovementSpeed, 0);
+        _rig.AddForce(movementDirection);
+    }
+
+    public void MoveDirection(float direction)
+    {
+        _direction = direction;
     }
 }
