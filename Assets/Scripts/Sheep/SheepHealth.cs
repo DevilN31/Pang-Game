@@ -20,7 +20,7 @@ public class SheepHealth : MonoBehaviour
         if (_IsAlive)
         {
             _IsAlive = false;
-            GameEvents.AddScore?.Invoke();
+            GameEvents.AddScore?.Invoke(100);
 
             if (transform.localScale.x <= 0.4f)
                 Destroy(gameObject);

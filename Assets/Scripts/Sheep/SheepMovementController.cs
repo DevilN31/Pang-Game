@@ -30,21 +30,22 @@ public class SheepMovementController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        // collision with Player
+        if(collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealth))
         {
-            collision.gameObject.TryGetComponent<PlayerHealth>(out PlayerHealth playerHealth);
             if (playerHealth.IsAlive)
                 playerHealth.PlayerDeath();
         }
 
+        
         if(collision.gameObject.CompareTag("Ground"))
         {
             _rig.velocity = new Vector2(0,_YSpeed);
         }
-        else
+        else // Collision with anything other then ground make sheep jump and change direction
         {
             _movementDirection = ((transform.position - collision.transform.position).normalized.x) > 0 ? 1 : -1; ;
-            _rig.velocity = new Vector2(0, _YSpeed/2);
+            _rig.velocity = new Vector2(0, _YSpeed/3);
             _spriteRenderer.flipX = _movementDirection > 0 ? false: true;
 
         }

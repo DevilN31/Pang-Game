@@ -9,21 +9,20 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     List<Component> _ComponentsToDisable;
 
-    Animator _anim;
 
     public bool IsAlive { get { return _IsAlive; } }
 
     void Start()
     {
         _IsAlive = true;
-        _anim = GetComponentInChildren<Animator>();
     }
 
     
     public void PlayerDeath()
     {
         _IsAlive = false;
-        _anim.SetTrigger("Death");
+        GameEvents.SetAnimationTrigger?.Invoke("Death");
+        GameEvents.PlayerDeath?.Invoke();
 
         foreach(var comp in _ComponentsToDisable) 
         {
