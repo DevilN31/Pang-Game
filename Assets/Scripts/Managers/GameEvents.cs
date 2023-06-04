@@ -10,9 +10,11 @@ public class GameEvents
 
     // Game logic events
     public static Action StartLevel;
+    public static Action LevelEnded;
     public static Action RestartCurrentScene;
     public static Action SpawnSheep;
     public static Action PlayerDeath;
+    public static Action PlayerWin;
     public static Action<GameObject> AddSheepToList;
     public static Action<GameObject> RemoveSheepFromList;
 
@@ -24,4 +26,8 @@ public class GameEvents
     // animation events
     public static Action<string,bool> SetAnimationBool;
     public static Action<string> SetAnimationTrigger;
+
+    // Audio Events
+    public static Action<AudioClip> PlaySFX;
+   
 }

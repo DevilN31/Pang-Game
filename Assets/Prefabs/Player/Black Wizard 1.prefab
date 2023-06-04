@@ -217,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _SpellPrefab: {fileID: 706814777547970466, guid: 9ac3d8f88ea70c7459d476c656881023, type: 3}
   _AttackSpeed: 0.5
+  _AttackSound: {fileID: 8300000, guid: 79fb2b150eb64af48bd3da7a6500c81b, type: 3}
 --- !u!114 &-1937152638612495168
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,17 @@ namespace Nati.Input
 
         public static Action<ClickableButtonType> OnPressed;
 
+        private void OnEnable()
+        {
+            ResetAxis();
+        }
+
+        private void OnDisable()
+        {
+            ResetAxis();
+
+        }
+
         public static float GetAxis(Axis axis)
         {
             switch (axis)
@@ -34,6 +45,12 @@ namespace Nati.Input
                 case ClickableButtonType.Jump: return true;
                 default: return false;
             }
+        }
+
+        void ResetAxis()
+        {
+            _DirectionX = 0;
+            _DirectionY = 0;
         }
         
     }
