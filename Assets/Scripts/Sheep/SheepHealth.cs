@@ -10,6 +10,11 @@ public class SheepHealth : MonoBehaviour
     [SerializeField]
     bool _IsAlive = true;
 
+    private void OnEnable()
+    {
+        GameEvents.AddSheepToList?.Invoke(gameObject);
+    }
+
     private void Start()
     {
         _IsAlive= true;
@@ -23,7 +28,10 @@ public class SheepHealth : MonoBehaviour
             GameEvents.AddScore?.Invoke(100);
 
             if (transform.localScale.x <= 0.4f)
+            {
+                GameEvents.RemoveSheepFromList.Invoke(gameObject);
                 Destroy(gameObject);
+            }
             else
             {
 
@@ -34,6 +42,8 @@ public class SheepHealth : MonoBehaviour
                 GameObject sheep2 = Instantiate(_SheepPrefab, transform.position, Quaternion.identity);
                 sheep2.transform.localScale *= 0.8f;
                 sheep2.GetComponent<SheepMovementController>().SetDirection(1);
+
+                GameEvents.RemoveSheepFromList.Invoke(gameObject);
 
                 Destroy(this.gameObject);
             }

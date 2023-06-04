@@ -62,8 +62,8 @@ public class UiManager : MonoBehaviour
 
     void UpdateScoreText()
     {
-        _ScoreText.text = $"Score: {_ScoreManager.Score}";
-        _FinalScoreText.text = $"Final Score: {_ScoreManager.Score}";
+        _ScoreText.text = $"Score: {_ScoreManager.Score.ToString("0,0")}";
+        _FinalScoreText.text = $"Final Score: {_ScoreManager.Score.ToString("0,0")}";
     }
 
     public void ShowMenuButton()
@@ -93,7 +93,7 @@ public class UiManager : MonoBehaviour
         _PlayerControllerCanvas.SetActive(true);
         _OpenMenuButton.SetActive(true);
 
-        GameEvents.StartGame?.Invoke();
+        GameEvents.StartLevel?.Invoke();
 
     }
 

@@ -26,6 +26,7 @@ public class ScoreManager : MonoBehaviour
         GameEvents.AddScore += AddScore;
         GameEvents.PlayerDeath += SaveHighScore;
         GameEvents.ReloadHighScores += LoadHighScores;
+        GameEvents.StartLevel += ResetScore;
     }
 
     private void OnDisable()
@@ -33,11 +34,11 @@ public class ScoreManager : MonoBehaviour
         GameEvents.AddScore -= AddScore;
         GameEvents.PlayerDeath -= SaveHighScore;
         GameEvents.ReloadHighScores -= LoadHighScores;
-
+        GameEvents.StartLevel -= ResetScore;
 
     }
 
-    private void Awake()
+    private void Start()
     {
         LoadHighScores();
     }
@@ -45,6 +46,12 @@ public class ScoreManager : MonoBehaviour
     void AddScore(int amount)
     {
         _Score+= amount;
+        GameEvents.UpdateGameUi?.Invoke();
+    }
+
+    void ResetScore()
+    {
+        _Score = 0;
         GameEvents.UpdateGameUi?.Invoke();
     }
 
@@ -97,7 +104,6 @@ public class ScoreManager : MonoBehaviour
             
             for(int i = 0; i< _ScoreboardHolder.childCount; i++) 
             {
-                print("in");
                 Destroy(_ScoreboardHolder.GetChild(i).gameObject);
             }
         }
@@ -105,7 +111,7 @@ public class ScoreManager : MonoBehaviour
         for(int i = 0; i<_scoreArr.Count;i++)
         {
             TextMeshProUGUI temp = Instantiate(_ScoreTextPrefab, _ScoreboardHolder);
-            temp.text = $"{i + 1}. {_scoreArr[i]}";
+            temp.text = $"{i + 1}. {_scoreArr[i].ToString("0,0")}";
         }
 
     }

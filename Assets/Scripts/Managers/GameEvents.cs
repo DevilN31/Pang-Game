@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class GameEvents
 {
@@ -8,10 +9,13 @@ public class GameEvents
     public static Action ReloadHighScores;
 
     // Game logic events
-    public static Action StartGame;
+    public static Action StartLevel;
     public static Action RestartCurrentScene;
     public static Action SpawnSheep;
     public static Action PlayerDeath;
+    public static Action<GameObject> AddSheepToList;
+    public static Action<GameObject> RemoveSheepFromList;
+
 
     // Game time scale events
     public static Action FreezeGame;
