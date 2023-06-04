@@ -1,3 +1,4 @@
+using Nati.Input;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,34 +10,41 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]
     float _AttackSpeed = 1.5f;
 
-    Animator _anim;
     float counter;
+
+    private void OnEnable()
+    {
+        TouchInputController.OnPressed += SpawnSpellPrefab;
+    }
+    private void OnDisable()
+    {
+        TouchInputController.OnPressed -= SpawnSpellPrefab;
+
+    }
 
     void Start()
     {
-        _anim = GetComponentInChildren<Animator>();    
     }
 
     // Update is called once per frame
     void Update()
     {
         counter += Time.deltaTime;
-
-        if(Input.GetKeyDown(KeyCode.Space)) 
-        {
-            SpawnSpellPrefab();
-        }
     }
 
-    public void SpawnSpellPrefab()
+    public void SpawnSpellPrefab(ClickableButtonType clickableButtonType)
     {
-        if (counter >= _AttackSpeed)
+        if (clickableButtonType == ClickableButtonType.Fire)
         {
-            counter = 0;
-            _anim.SetTrigger("Attack");
-            Instantiate(_SpellPrefab, transform.position, Quaternion.identity);
+            if (counter >= _AttackSpeed)
+            {
+                counter = 0;
+                GameEvents.SetAnimationTrigger?.Invoke("Attack");
+
+                Instantiate(_SpellPrefab, transform.position, Quaternion.identity);
+            }
+            else
+                return;
         }
-        else
-            return;
     }
 }
