@@ -21,6 +21,8 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     GameObject _GameOverPanel;
     [SerializeField]
+    GameObject _WinPanel;
+    [SerializeField]
     TextMeshProUGUI _FinalScoreText;
     [SerializeField]
     GameObject _PlayerControllerCanvas;
@@ -33,6 +35,8 @@ public class UiManager : MonoBehaviour
     {
         GameEvents.UpdateGameUi += UpdateScoreText;
         GameEvents.PlayerDeath += ShowGameOverPanel;
+        GameEvents.PlayerWin += ShowWinPanel;
+
 
     }
 
@@ -40,6 +44,8 @@ public class UiManager : MonoBehaviour
     {
         GameEvents.UpdateGameUi -= UpdateScoreText;
         GameEvents.PlayerDeath -= ShowGameOverPanel;
+        GameEvents.PlayerWin -= ShowWinPanel;
+
 
     }
 
@@ -58,6 +64,7 @@ public class UiManager : MonoBehaviour
         _GameMenuCanvas.SetActive(false);
         _GameOverPanel.SetActive(false);
         _OpenMenuButton.SetActive(false);
+        _WinPanel.SetActive(false);
     }
 
     void UpdateScoreText()
@@ -75,6 +82,13 @@ public class UiManager : MonoBehaviour
     void ShowGameOverPanel()
     {
         StartCoroutine(DelayedPanelShow(_GameOverPanel, 1));
+        _PlayerControllerCanvas.SetActive(false);
+        _ScorePanel.SetActive(false);
+        _OpenMenuButton.SetActive(false);
+    }
+    void ShowWinPanel()
+    {
+        StartCoroutine(DelayedPanelShow(_WinPanel, 1));
         _PlayerControllerCanvas.SetActive(false);
         _ScorePanel.SetActive(false);
         _OpenMenuButton.SetActive(false);

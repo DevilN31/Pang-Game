@@ -9,6 +9,8 @@ public class PlayerAttack : MonoBehaviour
     GameObject _SpellPrefab;
     [SerializeField]
     float _AttackSpeed = 1.5f;
+    [SerializeField]
+    AudioClip _AttackSound;
 
     float counter;
 
@@ -40,7 +42,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 counter = 0;
                 GameEvents.SetAnimationTrigger?.Invoke("Attack");
-
+                GameEvents.PlaySFX?.Invoke(_AttackSound);
                 Instantiate(_SpellPrefab, transform.position, Quaternion.identity);
             }
             else

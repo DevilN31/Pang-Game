@@ -23,7 +23,7 @@ namespace Nati.Input
                     _DirectionX = _MovementDirection == MovementDirection.Positive ? 1 : -1; break;
             }
 
-            Debug.Log($"<MovementDirectionButton> Direction X {_DirectionX} Direction Y {_DirectionY}");
+           // Debug.Log($"<MovementDirectionButton> Direction X {_DirectionX} Direction Y {_DirectionY}");
         }
 
         public void OnPointerUp(PointerEventData eventData)

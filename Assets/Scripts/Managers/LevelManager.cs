@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance;
+
     [SerializeField]
     GameObject _PlayerPrefab;
     [SerializeField]
@@ -19,6 +21,8 @@ public class LevelManager : MonoBehaviour
     int _currentLevelNum;
 
     public int CurrentLevelNum { get { return _currentLevelNum; } }
+    public bool IsPlayerAlive { get { return _Player.GetComponent<PlayerHealth>().IsAlive; } }
+    public int SheepCount { get { return _SheepList.Count; } }
 
     private void OnEnable()
     {
@@ -33,6 +37,29 @@ public class LevelManager : MonoBehaviour
         GameEvents.RestartCurrentScene -= ResetCurrentLevel;
         GameEvents.AddSheepToList -= AddSheepToList;
         GameEvents.RemoveSheepFromList -= RemoveSheepFromList;
+    }
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
+
+    private void Update()
+    {
+        if (!_isLevelStarted)
+            return;
+
+        if (!_isLevelEnded)
+        {
+            if (_SheepList.Count == 0 || !_Player.GetComponent<PlayerHealth>().IsAlive)
+            {
+                _isLevelEnded = true;
+                GameEvents.LevelEnded?.Invoke();
+            }
+        }
     }
 
     void StartGame()
@@ -53,18 +80,7 @@ public class LevelManager : MonoBehaviour
 
         _isLevelStarted= true;
         GameEvents.UnFreezeGame?.Invoke();
-    }
-
-    private void Update()
-    {
-        if (!_isLevelStarted)
-            return;
-
-        if (_SheepList.Count == 0 || !_Player.GetComponent<PlayerHealth>().IsAlive)
-        {
-            _isLevelEnded = true;
-        }
-    }
+    } 
 
     void SpawnPlayer()
     {
